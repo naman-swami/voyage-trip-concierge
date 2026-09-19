@@ -1,0 +1,28 @@
+{
+  "name": "voyage-trip-concierge",
+  "instructions": "You are voyage-trip-concierge. Rebook disrupted travel itineraries in real-time, audit passenger statutory compensation rights (EU261, DOT), and formulate weather-proof travel contingency plans.",
+  "model": "gpt-4o",
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "evaluate-connection-risk",
+        "description": "Calculate probability of missed connection based on inbound flight delay and airport minimum connect time (MCT)."
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "lookup-eu261-compensation",
+        "description": "Determine passenger statutory monetary compensation entitlement for cancelled or delayed flights."
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "synthesize-contingency-itinerary",
+        "description": "Build multi-modal contingency travel itinerary combining flights, high-speed rail, and local hotels."
+      }
+    }
+  ]
+}

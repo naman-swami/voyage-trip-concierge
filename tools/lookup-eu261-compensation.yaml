@@ -1,0 +1,33 @@
+annotations:
+  cost: none
+  read_only: true
+  requires_confirmation: false
+description: Determine passenger statutory monetary compensation entitlement for cancelled
+  or delayed flights.
+input_schema:
+  additionalProperties: false
+  properties:
+    arrival_delay_hours:
+      type: number
+    carrier_jurisdiction:
+      type: string
+    flight_distance_km:
+      type: number
+  required:
+  - flight_distance_km
+  - arrival_delay_hours
+  type: object
+name: lookup-eu261-compensation
+output_schema:
+  additionalProperties: false
+  properties:
+    confidence:
+      type: number
+    data:
+      type: string
+    status:
+      type: string
+  required:
+  - status
+  - data
+  type: object

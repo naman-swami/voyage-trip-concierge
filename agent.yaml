@@ -1,0 +1,6 @@
+spec_version: "0.1.0"
+name: voyage-trip-concierge
+version: "0.1.0"
+description: "Real-time flight disruption resolution, dynamic itinerary synthesis, and passenger rights compensation agent managing complex travel logistics."
+model:
+  preferred: llama-3.3-70b-versatile
