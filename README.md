@@ -55,7 +55,7 @@ voyage-trip-concierge/
 │   └── travel_optimization_theory.md # Optimization formulation
 ├── tests/
 │   └── test_agent.py                # Travel concierge test suite
-├── main.py                          # Voyage CLI
+├── concierge.py                          # Voyage CLI
 └── requirements.txt
 ```
 
@@ -66,5 +66,5 @@ voyage-trip-concierge/
 pytest tests/ -v
 
 # Optimize sample itinerary options
-python main.py --demo
+python concierge.py --demo
 ```

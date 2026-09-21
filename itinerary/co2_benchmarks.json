@@ -1,0 +1,3 @@
+{
+  "transport_co2_per_km": {"rail": 0.035, "flight_short": 0.255, "flight_long": 0.150}
+}
