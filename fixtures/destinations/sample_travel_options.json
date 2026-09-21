@@ -1,0 +1,23 @@
+[
+  {
+    "plan_name": "High-Speed Rail + Boutique Hotel",
+    "cost_usd": 650.0,
+    "transit_hours": 3.5,
+    "hotel_rating": 4.8,
+    "co2_kg": 14.0
+  },
+  {
+    "plan_name": "Budget Flight + Standard Hotel",
+    "cost_usd": 420.0,
+    "transit_hours": 5.0,
+    "hotel_rating": 3.9,
+    "co2_kg": 145.0
+  },
+  {
+    "plan_name": "Premium Flight + Luxury Resort",
+    "cost_usd": 1450.0,
+    "transit_hours": 4.2,
+    "hotel_rating": 4.9,
+    "co2_kg": 210.0
+  }
+]

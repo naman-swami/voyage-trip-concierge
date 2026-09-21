@@ -1,19 +1,26 @@
-import json
 import argparse
-from src.trip_engine import TripDisruptionEngine
+import json
+import os
+from itinerary.pareto_itinerary_engine import TravelOptimizationEngine
 
 def main():
     parser = argparse.ArgumentParser(description="Voyage Trip Concierge CLI")
-    parser.add_argument("--demo", action="store_true", help="Run simulated EU261 statutory claim audit")
+    parser.add_argument("--demo", action="store_true", help="Evaluate sample travel itineraries")
     args = parser.parse_args()
 
-    engine = TripDisruptionEngine()
-    report = engine.compute_eu261_compensation(flight_distance_km=5800, delay_arrival_hours=4.5, carrier_fault=True)
-    print("="*60)
-    print(" VOYAGE TRIP DISRUPTION & STATUTORY AUDIT REPORT")
-    print("="*60)
-    print(json.dumps(report, indent=2))
-    print("="*60)
+    data_file = os.path.join(os.path.dirname(__file__), "fixtures", "destinations", "sample_travel_options.json")
+
+    if args.demo:
+        with open(data_file, "r") as f:
+            options = json.load(f)
+        res = TravelOptimizationEngine.evaluate_pareto_options(options, max_budget_usd=1000.0)
+        print("=== VOYAGE MULTI-OBJECTIVE TRAVEL ITINERARY REPORT ===\n")
+        print(f"Options Evaluated: {res['total_options_evaluated']} | Feasible under $1,000 budget: {res['feasible_within_budget']}")
+        print(f"Recommended Plan: {res['recommended_plan']}")
+        print(f"  Cost: ${res['cost_usd']} | Transit Duration: {res['transit_hours']} hrs")
+        print(f"  Carbon Footprint: {res['co2_footprint_kg']} kg CO2\n")
+    else:
+        parser.print_help()
 
 if __name__ == "__main__":
     main()
