@@ -1,70 +1,41 @@
-# Voyage Multi-Criteria Travel Concierge
+# Voyage Multi-Objective Itinerary Concierge
 
-[![OpenGAP](https://img.shields.io/badge/OpenGAP-0.1.0-blue.svg)](agent.yaml)
-[![Travel](https://img.shields.io/badge/Domain-Travel_Hospitality_Pareto-orange.svg)](docs/travel_optimization_theory.md)
-[![Algorithm](https://img.shields.io/badge/Model-Pareto_Frontier-blue.svg)](docs/travel_optimization_theory.md)
-[![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](requirements.txt)
-[![CI](https://img.shields.io/badge/CI-Passing-brightgreen.svg)](.github/workflows/ci.yml)
+> **Autonomous Pareto Frontier Optimization for Corporate & Leisure Travel**  
+> Balancing Financial Budget, Transit Duration, and Carbon Footprint ($CO_2e$) Trade-Offs.
 
-An intelligent travel and hospitality concierge engine performing multi-objective Pareto optimization across travel expenditure, transit latency, and carbon footprints.
+---
 
-```
-                    ┌─────────────────────────┐
-                    │ Multi-Modal Trip Options│
-                    │ (Air, Rail, Hotel, CO2) │
-                    └────────────┬────────────┘
-                                 │
-                                 ▼
-                    ┌─────────────────────────┐
-                    │ itinerary/pareto_engine │
-                    └────────────┬────────────┘
-                                 │
-                 ┌───────────────┴───────────────┐
-                 ▼                               ▼
-      ┌─────────────────────┐         ┌─────────────────────┐
-      │ Budget Filter       │         │ Pareto Tradeoff     │
-      │ Cost <= Max Budget  │         │ Rating vs Duration  │
-      └──────────┬──────────┘         └──────────┬──────────┘
-                 │                               │
-                 └───────────────┬───────────────┘
-                                 ▼
-                    ┌─────────────────────────┐
-                    │ Optimal Itinerary Plan  │
-                    │ (Recommended Package)   │
-                    └─────────────────────────┘
-```
+### Multi-Objective Pareto Optimization
 
-## Features
+Rather than prescribing a single rigid route, Voyage constructs the non-dominated Pareto frontier across three competing objective dimensions:
 
-- **Multi-Objective Travel Tradeoffs**: Balances budget constraints against transit fatigue and hotel comfort.
-- **Carbon-Aware Travel Guidance**: Compares high-speed rail vs domestic flights on emissions.
-- **Benchmark Destination Packages**: Includes multi-modal European and transcontinental travel options.
+$$\min \mathbf{F}(\mathbf{x}) = \left[ \text{Cost}(\mathbf{x}), \text{Duration}(\mathbf{x}), \text{Carbon}(\mathbf{x}) \right]^T$$
 
-## Directory Structure
+A travel option $\mathbf{x}_1$ dominates $\mathbf{x}_2$ if and only if $\mathbf{x}_1$ is strictly better in at least one dimension without being worse in any other.
 
-```
-voyage-trip-concierge/
-├── agent.yaml                       # OpenGAP 0.1.0 Manifest
-├── EXPLAINABILITY.md                # 7-checkpoint travel provenance
-├── itinerary/
-│   └── pareto_itinerary_engine.py   # Multi-objective Pareto optimizer
-├── fixtures/
-│   └── destinations/
-│       └── sample_travel_options.json # Benchmark travel packages
-├── docs/
-│   └── travel_optimization_theory.md # Optimization formulation
-├── tests/
-│   └── test_agent.py                # Travel concierge test suite
-├── concierge.py                          # Voyage CLI
-└── requirements.txt
-```
+---
 
-## Quick Start
+### Sample Itinerary Trade-Off Matrix
+
+Evaluated for benchmark transcontinental route (`fixtures/destinations/sample_travel_options.json`):
+
+| Itinerary Persona | Selected Modality | Total Cost (USD) | Transit Time | Carbon ($kg CO_2e$) | Pareto Status |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Eco-Conscious Traveler** | High-Speed Rail + Hotel | **$340.00** | 6h 30m | **18.4 kg** | Non-Dominated |
+| **Executive Express** | Direct Flight + Premium Transfer | $680.00 | **2h 45m** | 142.0 kg | Non-Dominated |
+| **Budget Explorer** | Regional Bus + Economy Stay | **$160.00** | 10h 15m | 32.1 kg | Non-Dominated |
+| *Sub-Optimal Route* | Multi-Layover Flight | $720.00 | 7h 10m | 185.0 kg | *Dominated (Pruned)* |
+
+---
+
+### Travel Concierge CLI
 
 ```bash
-# Run travel optimization tests
-pytest tests/ -v
-
-# Optimize sample itinerary options
+# Evaluate benchmark travel options along Pareto frontier
 python concierge.py --demo
+
+# Run multi-objective optimization unit tests
+pytest tests/ -v
 ```
+
+Traveler policy allowances, per-diem caps, and carbon offsets are governed by [TRAVEL_POLICY.md](TRAVEL_POLICY.md).
